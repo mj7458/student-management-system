@@ -16,7 +16,6 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Attendance", description = "Operations related to student attendance")
 public class AttendanceController implements AttendanceApi {
     @Autowired
     private AttendanceService attendanceService;

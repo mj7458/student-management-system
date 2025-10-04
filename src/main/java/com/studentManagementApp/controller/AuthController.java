@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 @RestController
-@Tag(name = "Authentication", description = "Operations related to authentication")
 public class AuthController implements AuthenticationApi {
     private final JwtUtil jwtUtil;
     private final UserService userService;

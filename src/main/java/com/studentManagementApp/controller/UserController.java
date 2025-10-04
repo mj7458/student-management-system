@@ -13,7 +13,6 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Users", description = "Operations related to users of application")
 public class UserController implements UsersApi {
     @Autowired
     private UserService userService;

@@ -14,7 +14,6 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Student", description = "Operations related to students management")
 public class StudentController implements StudentsApi {
     private final StudentService service;
 
