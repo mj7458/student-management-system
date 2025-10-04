@@ -19,10 +19,11 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String token = request.getHeader("X-Auth-token");
-        if (request.getServletPath().equals("/auth/login")) {
+        String path = request.getServletPath();
+        if (path.startsWith("/auth/login") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.startsWith("/swagger-ui.html"))
+        {
             chain.doFilter(request, response);
             return;
         }

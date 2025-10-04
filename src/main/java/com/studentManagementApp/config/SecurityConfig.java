@@ -58,7 +58,6 @@ public class SecurityConfig  {
                                         "/auth/login",
                                         "/students",
                                         "/users",
-                                        "/api/v1/users/**",
                                         "/users/**",
                                         "/students/*",
                                         "/attendance/*",

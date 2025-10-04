@@ -2,6 +2,7 @@ package com.studentManagementApp.controller;
 
 import com.studentManagementApp.mapper.StudentMapper;
 import com.studentManagementApp.service.StudentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.StudentsApi;
 import org.openapitools.model.StudentDto;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@Tag(name = "Student", description = "Operations related to students management")
 public class StudentController implements StudentsApi {
     private final StudentService service;
 

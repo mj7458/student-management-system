@@ -3,6 +3,7 @@ package com.studentManagementApp.controller;
 import com.studentManagementApp.entity.Attendance;
 import com.studentManagementApp.mapper.AttendanceMapper;
 import com.studentManagementApp.service.AttendanceService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.AttendanceApi;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@Tag(name = "Attendance", description = "Operations related to student attendance")
 public class AttendanceController implements AttendanceApi {
     @Autowired
     private AttendanceService attendanceService;

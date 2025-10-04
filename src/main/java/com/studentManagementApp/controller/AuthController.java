@@ -4,6 +4,7 @@ import com.studentManagementApp.entity.User;
 import com.studentManagementApp.mapper.UserMapper;
 import com.studentManagementApp.security.JwtUtil;
 import com.studentManagementApp.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.openapitools.api.AuthenticationApi;
 import org.openapitools.model.Login200Response;
 import org.openapitools.model.UserDto;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 @RestController
+@Tag(name = "Authentication", description = "Operations related to authentication")
 public class AuthController implements AuthenticationApi {
     private final JwtUtil jwtUtil;
     private final UserService userService;
