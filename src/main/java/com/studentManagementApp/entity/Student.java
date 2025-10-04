@@ -1,8 +1,12 @@
 package com.studentManagementApp.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -18,6 +22,6 @@ public class Student {
     private String name;
     private int age;
     private String course;
-    private Date enroll_date = new Date();
+    private LocalDate enrollDate = new Date().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
 
 }

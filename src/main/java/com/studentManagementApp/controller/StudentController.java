@@ -1,48 +1,55 @@
 package com.studentManagementApp.controller;
 
-import com.studentManagementApp.entity.Student;
+import com.studentManagementApp.mapper.StudentMapper;
 import com.studentManagementApp.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.openapitools.api.StudentsApi;
+import org.openapitools.model.StudentDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:4200/")
 @Slf4j
 @RestController
-@RequestMapping("/students")
-public class StudentController {
+public class StudentController implements StudentsApi {
     private final StudentService service;
+
+    @Autowired
+    private StudentMapper studentMapper;
 
     public StudentController(StudentService service) {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Student> getAllStudents() {
-        List<Student> list=service.getAllStudents();
-        log.info(list.toString());
-        return list;
+    @Override
+    public ResponseEntity<StudentDto> addStudent(StudentDto studentDto) {
+        return ResponseEntity.ok(service.addStudent(studentMapper.toEntity(studentDto)));
     }
 
-    @GetMapping("/{name}")
-    public Student getStudentByName(@PathVariable String name) {
-        return service.getStudentByName(name);
-    }
-
-
-    @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        return service.addStudent(student);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<Void> deleteStudent(Long id) {
         service.deleteStudent(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/delete")
-    public void deleteStudents(@RequestBody List<Long> ids) {
+    @Override
+    public ResponseEntity<Void> deleteStudents(List<Long> ids) {
         service.deleteStudents(ids);
+        return ResponseEntity.noContent().build();
     }
+
+    @Override
+    public ResponseEntity<List<StudentDto>> getAllStudents() {
+        List<StudentDto> list = service.getAllStudents();
+        log.info(list.toString());
+        return ResponseEntity.ok(list);
+    }
+
+    @Override
+    public ResponseEntity<StudentDto> getStudentByName(String name) {
+        return ResponseEntity.ok(studentMapper.toDto(service.getStudentByName(name)));
+    }
+
 }

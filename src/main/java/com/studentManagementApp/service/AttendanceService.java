@@ -1,7 +1,9 @@
 package com.studentManagementApp.service;
 
 import com.studentManagementApp.entity.Attendance;
+import com.studentManagementApp.mapper.AttendanceMapper;
 import com.studentManagementApp.repo.AttendanceRepository;
+import org.openapitools.model.AttendanceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +15,18 @@ public class AttendanceService {
     @Autowired
     private AttendanceRepository attendanceRepository;
 
-    public List<Attendance> getAttendanceForStudent(Long studentId, int year, int month) {
+    @Autowired
+    AttendanceMapper attendanceMapper;
+
+    public List<AttendanceDto> getAttendanceForStudent(Long studentId, int year, int month) {
         LocalDate startDate = LocalDate.of(year, month, 1);
         LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
 
-        return attendanceRepository.findByStudentIdAndDateBetween(studentId, startDate, endDate);
+        return attendanceRepository.findByStudentIdAndDateBetween(studentId, startDate, endDate).stream().map(attendanceMapper::toDto).toList();
     }
 
-    public List<Attendance> markAttendance(List<Attendance> attendanceList){
-       return attendanceRepository.saveAll(attendanceList);
+    public List<AttendanceDto> markAttendance(List<Attendance> attendanceList) {
+        return attendanceRepository.saveAll(attendanceList).stream().map(attendanceMapper::toDto).toList();
     }
 
 }

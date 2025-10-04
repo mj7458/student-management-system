@@ -1,17 +1,20 @@
 package com.studentManagementApp.controller;
 
 import com.studentManagementApp.entity.User;
+import com.studentManagementApp.mapper.UserMapper;
 import com.studentManagementApp.security.JwtUtil;
 import com.studentManagementApp.service.UserService;
-import org.springframework.web.bind.annotation.*;
+import org.openapitools.api.AuthenticationApi;
+import org.openapitools.model.Login200Response;
+import org.openapitools.model.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 import java.util.Objects;
 
-//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+public class AuthController implements AuthenticationApi {
     private final JwtUtil jwtUtil;
     private final UserService userService;
 
@@ -20,18 +23,25 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/login")
-    public Map<String, String> login(@RequestBody User user) {
-        if(validateCredentials(user)) {
-            return Map.of("token", jwtUtil.generateToken(user),"message", "success");
+    @Autowired
+    UserMapper userMapper;
+
+    @Override
+    public ResponseEntity<Login200Response> login(UserDto userDto) {
+        Login200Response response = new Login200Response();
+        if (validateCredentials(userDto)) {
+            response.setToken(jwtUtil.generateToken(userMapper.toEntity(userDto)));
+            response.setMessage("success");
+            return ResponseEntity.ok(response);
+        } else {
+            response.setMessage("Invalid username/password");
+            return ResponseEntity.status(401).body(response);
         }
-        else
-            return Map.of("message","Invalid username/password");
     }
 
-    private boolean validateCredentials(User user) {
-        User data=userService.getUserByName(user.getUsername());
-        if(data==null){
+    private boolean validateCredentials(UserDto user) {
+        User data = userService.getUserByName(user.getUsername());
+        if (data == null) {
             return false;
         }
         return Objects.equals(user.getUsername(), data.getUsername()) && Objects.equals(user.getPassword(), data.getPassword());

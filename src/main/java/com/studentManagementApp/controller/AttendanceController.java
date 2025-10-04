@@ -1,33 +1,36 @@
 package com.studentManagementApp.controller;
 
 import com.studentManagementApp.entity.Attendance;
+import com.studentManagementApp.mapper.AttendanceMapper;
 import com.studentManagementApp.service.AttendanceService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.openapitools.api.AttendanceApi;
+import org.openapitools.model.AttendanceDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:4200/")
 @Slf4j
 @RestController
-@RequestMapping("/attendance")
-public class AttendanceController {
+public class AttendanceController implements AttendanceApi {
     @Autowired
     private AttendanceService attendanceService;
 
-    @GetMapping("/{studentId}")
-    public List<Attendance> getAttendance(
-            @PathVariable Long studentId,
-            @RequestParam int year,
-            @RequestParam int month
-    ) {
-        return attendanceService.getAttendanceForStudent(studentId, year, month);
+    @Autowired
+    AttendanceMapper attendanceMapper;
+
+    @Override
+    public ResponseEntity<List<AttendanceDto>> getAttendance(Long studentId, Integer year, Integer month) {
+        return ResponseEntity.ok(attendanceService.getAttendanceForStudent(studentId, year, month));
     }
 
-    @PostMapping("/save")
-    public List<Attendance> saveAttendance (@RequestBody List<Attendance> attendanceList){
-        return attendanceService.markAttendance(attendanceList);
+    @Override
+    public ResponseEntity<List<AttendanceDto>> saveAttendance(List<@Valid AttendanceDto> attendanceDto) {
+        List<Attendance> attendanceList = attendanceDto.stream().map(attendanceMapper::toEntity).toList();
+        return ResponseEntity.ok(attendanceService.markAttendance(attendanceList));
     }
 
 }

@@ -18,16 +18,17 @@ import java.util.Map;
 public class JwtUtil {
 //    private final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    private final String secret="70d1b578790941ab9f2bfcec98d38d91107506445819a12bba9c2ed2847fb43f";
+    private final String secret = "70d1b578790941ab9f2bfcec98d38d91107506445819a12bba9c2ed2847fb43f";
 
-    private static final String SECRET="demo-app";
+    private static final String SECRET = "demo-app";
 
     public String generateToken(User user) {
-        return generateToken(user,2);
+        return generateToken(user, 2);
     }
+
     @SneakyThrows
     private String generateToken(final User user, final long hours) {
-        final Map<String,Object> claims= new HashMap<>();
+        final Map<String, Object> claims = new HashMap<>();
         claims.put("username", user.getUsername());
         return Jwts.builder().setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -36,9 +37,9 @@ public class JwtUtil {
                 .compact();
     }
 
-    public boolean isTokenExpired(final String token){
-        try{
-            final Date expirationDate=getClaimsfromToken(token);
+    public boolean isTokenExpired(final String token) {
+        try {
+            final Date expirationDate = getClaimsfromToken(token);
             return expirationDate.before(new Date());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -46,8 +47,8 @@ public class JwtUtil {
 
     }
 
-    private static Date getClaimsfromToken(final String token){
-        final Claims claims=Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+    private static Date getClaimsfromToken(final String token) {
+        final Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
         return claims.getExpiration();
     }
 
@@ -55,7 +56,7 @@ public class JwtUtil {
         try {
             JwtParser parser = Jwts.parser().setSigningKey(SECRET);
             Claims claims = parser.parseClaimsJws(token).getBody();
-            log.info("token valid :{}",claims.getExpiration().after(new Date()));
+            log.info("token valid :{}", claims.getExpiration().after(new Date()));
             return claims.getExpiration().after(new Date());
         } catch (Exception e) {
             log.info(e.toString());

@@ -1,0 +1,252 @@
+openapi: 3.0.3
+info:
+  title: Student Management API
+  version: 1.0.0
+  description: API for managing students and attendance
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+tags:
+  - name: Students
+    description: Operations related to students
+  - name: Attendance
+    description: Attendance tracking endpoints
+
+paths:
+  /users:
+    get:
+      tags: [Users]
+      summary: Get all users
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+  /students:
+    get:
+      summary: Get all students
+      operationId: getAllStudents
+      tags: [Students]
+      responses:
+        '200':
+          description: List of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentDto'
+    post:
+      summary: Add a new student
+      operationId: addStudent
+      tags: [Students]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentDto'
+      responses:
+        '200':
+          description: Student added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDto'
+
+  /students/{name}:
+    get:
+      summary: Get student by name
+      operationId: getStudentByName
+      tags: [Students]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Student found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDto'
+        '404':
+          description: Student not found
+
+  /students/{id}:
+    delete:
+      summary: Delete student by ID
+      operationId: deleteStudent
+      tags: [Students]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Student deleted
+
+  /students/delete:
+    delete:
+      summary: Delete multiple students
+      operationId: deleteStudents
+      tags: [Students]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+      responses:
+        '204':
+          description: Students deleted
+
+
+  /auth/login:
+    post:
+      summary: Authenticate user and generate JWT token
+      operationId: login
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '200':
+          description: Login success or failure message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT token (present only on success)
+                  message:
+                    type: string
+                    description: Status message
+        '401':
+          description: Invalid credentials
+
+  /attendance/{studentId}:
+    get:
+      summary: Get attendance for a student by year and month
+      operationId: getAttendance
+      tags:
+        - Attendance
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: long
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of attendance records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceDto'
+
+  /attendance/save:
+    post:
+      summary: Save attendance records
+      operationId: saveAttendance
+      tags:
+        - Attendance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AttendanceDto'
+      responses:
+        '200':
+          description: Saved attendance records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceDto'
+
+
+components:
+  schemas:
+    StudentDto:
+      type: object
+      properties:
+        id:
+          type: long
+          default: 0
+        name:
+          type: string
+        age:
+          type: integer
+        enroll_date:
+          type: string
+          format: date
+        course:
+          type: string
+      required: [id, name, age, enroll_date, course]
+
+    AttendanceDto:
+      type: object
+      properties:
+        id:
+          type: long
+        studentId:
+          type: long
+        date:
+          type: string
+          format: date
+        status:
+          type: string
+          enum: [Present, Absent, Late]
+      required:
+        - studentId
+        - date
+        - status
+
+
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: long
+        username:
+          type: string
+        password:
+          type: string
+      required: [id, username, password]
