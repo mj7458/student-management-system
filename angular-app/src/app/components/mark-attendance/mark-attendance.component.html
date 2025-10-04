@@ -1,0 +1,44 @@
+<div class="student-container">
+  <div>
+    <button class="back-btn" (click)="goBack()">&#8592; Back</button>
+  </div>
+  <h2>Student List</h2>
+  <table class="student-table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Age</th>
+        <th>Enroll Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.id }}</td>
+        <td>
+          <a [routerLink]="'/students/' + student.id" class="student-link">
+            {{ student.name }}
+          </a>
+        </td>
+        <td>{{ student.course }}</td>
+        <td>{{ student.age }}</td>
+        <td>{{ student.enroll_date | date: 'shortDate' }}</td>
+        <td><input
+          type="checkbox"
+          (change)="onCheckboxChange($event, student.id)"
+        />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <a routerLink="/add-student" class="add-student-btn">Add Student</a>
+  <button class="delete-student-btn" class="delete-student-btn" (click)="onDeleteStudent()">Delete Student</button> -->
+<div class="button-group">
+  <button class="delete-student-btn" (click)="onPresent()">Mark Present</button>
+  <button class="delete-student-btn" (click)="onAbsent()">Mark Absent</button>
+  <button class="delete-student-btn" (click)="onLate()">Mark Late</button>
+</div>
+
+</div>

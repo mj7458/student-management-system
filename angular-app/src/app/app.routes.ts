@@ -1,0 +1,38 @@
+import { Routes } from '@angular/router';
+import { provideRouter } from '@angular/router';
+import { StudentListComponent } from './components/student-list/student-list.component';
+import { StudentDetailComponent } from './components/student-detail/student-detail.component';
+import { AddStudentComponent } from './components/add-student/add-student.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { authGuard } from './auth.guard';
+import { AttendanceComponent } from './components/attendance/attendance.component';
+import { MarkAttendanceComponent } from './components/mark-attendance/mark-attendance.component';
+
+
+// export const routes: Routes = [
+//   // { path: '', component: HomeComponent },
+//   { path: '', redirectTo: '/login', pathMatch: 'full' },
+//   { path: 'home', component: HomeComponent },
+//   { path: 'students', component: StudentListComponent },
+//   { path: 'students/:id', component: StudentDetailComponent },
+//   { path: 'add-student', component: AddStudentComponent },
+//   { path: 'login', component: LoginComponent },
+//   // {path: '**', redirectTo: '/home' }, // Wildcard route for a 404 page
+//   {path: 'logout', component: LogoutComponent }
+// ];
+
+export const routes: Routes = [
+  { path: '', component: HomeComponent, canActivate: [authGuard], pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'students', component: StudentListComponent, canActivate: [authGuard] },
+  { path: 'attendance', component: AttendanceComponent, canActivate: [authGuard] },
+  { path: 'students/:id', component: StudentDetailComponent, canActivate: [authGuard] },
+  { path: 'add-student', component: AddStudentComponent, canActivate: [authGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'mark-attendance',component: MarkAttendanceComponent, canActivate: [authGuard] },
+  { path: 'logout', component: LogoutComponent }
+];
+
+export const appRoutingProviders = [provideRouter(routes)];

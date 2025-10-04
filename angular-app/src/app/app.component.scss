@@ -1,0 +1,53 @@
+.active {
+  font-weight: bold;
+  color: rgb(53, 117, 181);
+}
+
+/* Beautify the navigation menu */
+nav {
+  background: #3d80b7;
+  padding: 16px 0;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-left a, .nav-right a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 18px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+  display: inline-block;
+}
+
+.nav-left a:hover,
+.nav-left a.active,
+.nav-right a:hover,
+.nav-right a.active {
+  background: #3a70ae;
+  color: white;
+  // color: #07285a;
+  text-decoration: none;
+}
+
+/* Add to your styles.css or component CSS */
+a.disabled {
+  pointer-events: none;
+  color: gray;
+  cursor: not-allowed;
+  text-decoration: none;
+}

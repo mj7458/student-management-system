@@ -1,0 +1,40 @@
+<div class="attendance-container">
+  <div>
+    <button class="back-btn" (click)="goBack()">&#8592; Back</button>
+  </div>
+  <h2>Attendance</h2>
+  <div class="attendance-controls">
+    <label for="studentSelect">Select Student:</label>
+    <select id="studentSelect" [(ngModel)]="selectedStudentId" (change)="onStudentChange($event)">
+      <option *ngFor="let student of students" [value]="student.id">{{ student.name }}</option>
+    </select>
+
+    <button (click)="prevMonth()" title="Previous Month">&lt;</button>
+    <span>{{ months[selectedMonth] }} {{ selectedYear }}</span>
+    <button (click)="nextMonth()" title="Next Month">&gt;</button>
+
+    <select [(ngModel)]="selectedYear" (ngModelChange)="onYearChange($event)">
+      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+    </select>
+  </div>
+
+  <table class="attendance-table" *ngIf="selectedStudent">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let day of daysInMonth">
+        <td>
+          {{ selectedYear }}-{{ (selectedMonth + 1) | number:'2.0' }}-{{ day | number:'2.0' }}
+        </td>
+        <td>
+          {{ getAttendanceStatus(selectedStudentId, selectedYear, selectedMonth, day) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!selectedStudent">Please select a student to view attendance.</p>
+</div>

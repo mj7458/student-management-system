@@ -1,0 +1,20 @@
+<nav>
+  <div class="nav-left">
+    <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/add-student" routerLinkActive="active">Add Student</a>
+    <a routerLink="/mark-attendance" routerLinkActive="active">Attendance</a>
+    <a routerLink="/students" routerLinkActive="active">Students</a>
+  </div>
+  <div class="nav-right">
+    <a routerLink="/login" routerLinkActive="active">Login</a>
+    <a 
+      routerLink="/logout" 
+      routerLinkActive="active"
+      [class.disabled]="isLoginPage"
+      [attr.aria-disabled]="isLoginPage"
+      [tabindex]="isLoginPage ? -1 : 0"
+      (click)="isLoginPage ? $event.preventDefault() : null"
+    >Logout</a>
+  </div>
+</nav>
+<router-outlet></router-outlet>
