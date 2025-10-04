@@ -66,12 +66,13 @@ onAbsent() {
     alert('Please select at least one student.');
     return;
   }
+  const formattedDate = new Date().toISOString().split('T')[0];
   this.attendance = [];
 
  for (let studentId of this.selectedStudentIds) {
     const attendanceRecord: Attendance = {
       studentId: studentId,
-      date: new Date(),
+      date: formattedDate as unknown as Date,
       status: AttendanceStatus.Absent
     };
     this.attendance.push(attendanceRecord);
@@ -89,12 +90,13 @@ onLate() {
     alert('Please select at least one student.');
     return;
   }
+  const formattedDate = new Date().toISOString().split('T')[0];
   this.attendance = [];
 
   for (let studentId of this.selectedStudentIds) {
     const attendanceRecord: Attendance = {
       studentId: studentId,
-      date: new Date(),
+      date: formattedDate as unknown as Date,
       status: AttendanceStatus.Late
     };
     this.attendance.push(attendanceRecord);
