@@ -1,4 +1,4 @@
-package com.studentManagementApp.project.sms;
+package com.studentManagementApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
