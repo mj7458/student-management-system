@@ -1,7 +1,8 @@
 package com.studentManagementApp.mapper;
 
 import com.studentManagementApp.entity.Attendance;
-import org.openapitools.model.AttendanceDto;
+//import org.openapitools.model.AttendanceDto;
+import dto.AttendanceDto;
 import org.springframework.stereotype.Component;
 
 @Component

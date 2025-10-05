@@ -3,7 +3,8 @@ package com.studentManagementApp.service;
 import com.studentManagementApp.entity.Attendance;
 import com.studentManagementApp.mapper.AttendanceMapper;
 import com.studentManagementApp.repo.AttendanceRepository;
-import org.openapitools.model.AttendanceDto;
+//import org.openapitools.model.AttendanceDto;
+import dto.AttendanceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

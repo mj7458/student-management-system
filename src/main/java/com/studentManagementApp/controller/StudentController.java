@@ -1,11 +1,13 @@
 package com.studentManagementApp.controller;
 
+import api.StudentsApi;
 import com.studentManagementApp.mapper.StudentMapper;
 import com.studentManagementApp.service.StudentService;
+import dto.StudentDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.openapitools.api.StudentsApi;
-import org.openapitools.model.StudentDto;
+//import org.openapitools.api.StudentsApi;
+//import org.openapitools.model.StudentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

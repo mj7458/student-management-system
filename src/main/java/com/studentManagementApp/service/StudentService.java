@@ -3,7 +3,8 @@ package com.studentManagementApp.service;
 import com.studentManagementApp.entity.Student;
 import com.studentManagementApp.mapper.StudentMapper;
 import com.studentManagementApp.repo.StudentRepository;
-import org.openapitools.model.StudentDto;
+//import org.openapitools.model.StudentDto;
+import dto.StudentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,8 @@ package com.studentManagementApp.service;
 
 import com.studentManagementApp.entity.User;
 import com.studentManagementApp.repo.UserRepository;
-import org.openapitools.model.UserDto;
+//import org.openapitools.model.UserDto;
+import dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

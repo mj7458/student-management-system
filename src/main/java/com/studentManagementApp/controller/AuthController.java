@@ -1,13 +1,16 @@
 package com.studentManagementApp.controller;
 
+import api.AuthenticationApi;
 import com.studentManagementApp.entity.User;
 import com.studentManagementApp.mapper.UserMapper;
 import com.studentManagementApp.security.JwtUtil;
 import com.studentManagementApp.service.UserService;
+import dto.Login200Response;
+import dto.UserDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.openapitools.api.AuthenticationApi;
-import org.openapitools.model.Login200Response;
-import org.openapitools.model.UserDto;
+//import org.openapitools.api.AuthenticationApi;
+//import org.openapitools.model.Login200Response;
+//import org.openapitools.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

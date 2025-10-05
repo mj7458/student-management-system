@@ -1,13 +1,15 @@
 package com.studentManagementApp.controller;
 
+import api.AttendanceApi;
 import com.studentManagementApp.entity.Attendance;
 import com.studentManagementApp.mapper.AttendanceMapper;
 import com.studentManagementApp.service.AttendanceService;
+import dto.AttendanceDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.openapitools.api.AttendanceApi;
-import org.openapitools.model.AttendanceDto;
+//import org.openapitools.api.AttendanceApi;
+//import org.openapitools.model.AttendanceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

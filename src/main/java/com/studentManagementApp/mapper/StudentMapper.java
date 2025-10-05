@@ -1,7 +1,8 @@
 package com.studentManagementApp.mapper;
 
 import com.studentManagementApp.entity.Student;
-import org.openapitools.model.StudentDto;
+//import org.openapitools.model.StudentDto;
+import dto.StudentDto;
 import org.springframework.stereotype.Component;
 
 @Component
