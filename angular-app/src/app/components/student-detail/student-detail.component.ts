@@ -1,43 +1,96 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { Student } from '../models/student.model';
-import { StudentService } from '../student.service';
 import { Location } from '@angular/common';
+import { AuthService } from '../auth.service';
+import { StudentService } from '../student.service';
+import { StudentDetails } from '../models/student-detail.module';
 
 @Component({
   selector: 'app-student-detail',
-  imports: [ReactiveFormsModule,RouterModule],
+  standalone: true,
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './student-detail.component.html',
   styleUrl: './student-detail.component.scss'
 })
-export class StudentDetailComponent {
+export class StudentDetailComponent implements OnInit {
   addStudentForm: FormGroup;
-  // student: Student {id=0, name: '', age: 0, course: '' };
-  student: Student = {  name: '', age: 0, course: ''  };
 
-  constructor(private fb: FormBuilder, private authService: AuthService,private router: Router, private studentService: StudentService,private location: Location) {
-      this.addStudentForm = this.fb.group({
-      name: ['', Validators.required],
-      age: ['', Validators.required],
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private studentService: StudentService,
+    private location: Location
+  ) {
+    this.addStudentForm = this.fb.group({
+      studentName: ['', Validators.required],
+      studentId: ['', Validators.required],
+      studentAge: ['', Validators.required],
+      sex: ['', Validators.required],
       course: ['', Validators.required],
+      address: [''],
+      phoneNumber: [''],
+      email: [''],
+      enrollDate: [''],
+      fathersName: [''],
+      fathersOccupation: [''],
+      mothersName: [''],
+      mothersOccupation: [''],
+      emergencyContact: [''],
+      emergencyContactRelation: ['', Validators.required],
+      emergencyContactPhone: ['']
     });
   }
 
-  goBack() {
+  ngOnInit(): void {
+    const navState = history.state;
+
+    this.addStudentForm.patchValue({
+      studentName: navState.studentName || '',
+      studentId: navState.studentId || '',
+      studentAge: navState.studentAge || '',
+      course: navState.course || ''
+    });
+  }
+
+  goBack(): void {
     this.location.back();
   }
-  goHome() {
-   this.router.navigate(['/home']);
+
+  goHome(): void {
+    this.router.navigate(['/home']);
   }
-  onSubmit(){
-    this.student.name = this.addStudentForm.value.name;
-    this.student.age = this.addStudentForm.value.age;
-    this.student.course = this.addStudentForm.value.course;
-    console.log('Add Student form value', this.addStudentForm.value);
+
+  onCancel(): void {
+    this.addStudentForm.reset();
+    this.goBack();
+  }
+
+  onSubmit(): void {
     if (this.addStudentForm.valid) {
-      this.studentService.addStudent(this.student).subscribe({
+      const student: StudentDetails = {
+        id: this.addStudentForm.value.studentId,
+        name: this.addStudentForm.value.studentName,
+        age: this.addStudentForm.value.studentAge,
+        sex: this.addStudentForm.value.sex,
+        course: this.addStudentForm.value.course,
+        address: this.addStudentForm.value.address,
+        phoneNumber: this.addStudentForm.value.phoneNumber,
+        email: this.addStudentForm.value.email,
+        enrollDate: this.addStudentForm.value.enrollDate,
+        fathersName: this.addStudentForm.value.fathersName,
+        fathersOccupation: this.addStudentForm.value.fathersOccupation,
+        mothersName: this.addStudentForm.value.mothersName,
+        mothersOccupation: this.addStudentForm.value.mothersOccupation,
+        emergencyContact: this.addStudentForm.value.emergencyContact,
+        emergencyContactRelation: this.addStudentForm.value.emergencyContactRelation,
+        emergencyContactPhone: this.addStudentForm.value.emergencyContactPhone
+      };
+
+      console.log('Submitting student:', student);
+
+      this.studentService.addStudent(student).subscribe({
         next: (response) => {
           console.log('Student added successfully', response);
           this.router.navigate(['/students']);
@@ -46,7 +99,8 @@ export class StudentDetailComponent {
           console.error('Error adding student', error);
         }
       });
+    } else {
+      console.warn('Form is invalid');
     }
-
   }
 }

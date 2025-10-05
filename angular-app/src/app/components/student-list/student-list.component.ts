@@ -14,6 +14,7 @@ import { Location } from '@angular/common';
 })
 export class StudentListComponent implements OnInit {
 
+
   students: any[] = [];
   selectedStudentIds: number[] = [];
 
@@ -31,7 +32,16 @@ export class StudentListComponent implements OnInit {
   goHome() {
    this.router.navigate(['/home']);
   }
-
+  goToStudentForm(student: any): void {
+    this.router.navigate(['/students', student.id], {
+      state: {
+        studentName: student.name,
+        studentId: student.id,
+        studentAge: student.age,
+        course: student.course
+      }
+    });
+  }
 onCheckboxChange(event: any, studentId: number) {
   if (event.target.checked) {
     console.log(studentId);

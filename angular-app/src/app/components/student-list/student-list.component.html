@@ -21,9 +21,7 @@
       <tr *ngFor="let student of students">
         <td>{{ student.id }}</td>
         <td>
-          <a [routerLink]="'/students/' + student.id" class="student-link">
-            {{ student.name }}
-          </a>
+          <button class="student-link" (click)="goToStudentForm(student)"> {{ student.name }} </button>
         </td>
         <td>{{ student.course }}</td>
         <td>{{ student.age }}</td>
