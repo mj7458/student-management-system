@@ -1,7 +1,7 @@
 import { CommonModule, NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 
@@ -16,7 +16,7 @@ export class SignupComponent {
 signupForm: FormGroup;
 loading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.signupForm = this.fb.group(
       {
         name: ['', Validators.required],
@@ -38,6 +38,7 @@ loading = false;
   }
   onCancel() {
     this.signupForm.reset(); // ✅ graceful cancel behavior
+    this.router.navigate(['/login']);
   }
 
   passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
