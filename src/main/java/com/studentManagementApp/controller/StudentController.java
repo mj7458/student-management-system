@@ -3,6 +3,7 @@ package com.studentManagementApp.controller;
 import api.StudentsApi;
 import com.studentManagementApp.mapper.MapperUtilImpl;
 import com.studentManagementApp.service.StudentService;
+import dto.StudentDetailsDto;
 import dto.StudentDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,4 +55,10 @@ public class StudentController implements StudentsApi {
         return ResponseEntity.ok(student);
     }
 
+    @Override
+    public ResponseEntity<StudentDetailsDto> addStudentDetails(StudentDetailsDto studentDetailsDto) {
+        StudentDetailsDto detailsDto=service.addStudentDetails(studentDetailsDto);
+        log.info(detailsDto.toString());
+        return ResponseEntity.ok(detailsDto);
+    }
 }

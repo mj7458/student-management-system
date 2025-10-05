@@ -1,23 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { Router,RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { Student } from '../models/student.model';
+import { StudentService } from '../student.service';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-student-detail',
-  imports: [RouterModule],
+  imports: [ReactiveFormsModule,RouterModule],
   templateUrl: './student-detail.component.html',
   styleUrl: './student-detail.component.scss'
 })
-export class StudentDetailComponent implements OnInit {
-  constructor(private location: Location,private router: Router) {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+export class StudentDetailComponent {
+  addStudentForm: FormGroup;
+  // student: Student {id=0, name: '', age: 0, course: '' };
+  student: Student = {  name: '', age: 0, course: ''  };
+
+  constructor(private fb: FormBuilder, private authService: AuthService,private router: Router, private studentService: StudentService,private location: Location) {
+      this.addStudentForm = this.fb.group({
+      name: ['', Validators.required],
+      age: ['', Validators.required],
+      course: ['', Validators.required],
+    });
   }
+
   goBack() {
     this.location.back();
   }
   goHome() {
    this.router.navigate(['/home']);
   }
+  onSubmit(){
+    this.student.name = this.addStudentForm.value.name;
+    this.student.age = this.addStudentForm.value.age;
+    this.student.course = this.addStudentForm.value.course;
+    console.log('Add Student form value', this.addStudentForm.value);
+    if (this.addStudentForm.valid) {
+      this.studentService.addStudent(this.student).subscribe({
+        next: (response) => {
+          console.log('Student added successfully', response);
+          this.router.navigate(['/students']);
+        },
+        error: (error) => {
+          console.error('Error adding student', error);
+        }
+      });
+    }
 
+  }
 }

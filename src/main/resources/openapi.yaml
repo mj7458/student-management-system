@@ -116,6 +116,24 @@ paths:
         '204':
           description: Students deleted
 
+  /students/saveDetails:
+    post:
+      summary: Add student details
+      operationId: addStudentDetails
+      tags: [ Students ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentDetailsDto'
+      responses:
+        '200':
+          description: Student added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDetailsDto'
 
   /auth/login:
     post:
@@ -239,7 +257,6 @@ components:
         - date
         - status
 
-
     UserDto:
       type: object
       properties:
@@ -250,3 +267,50 @@ components:
         password:
           type: string
       required: [id, username, password]
+
+    StudentDetailsDto:
+      type: object
+      properties:
+        id:
+          type: long
+          default: 0
+        studentId:
+          type: long
+        studentName:
+          type: string
+        studentAge:
+          type: integer
+        enroll_date:
+          type: string
+          format: date
+        course:
+          type: string
+        sex:
+          type: string
+          enum: [Male, Female, Other]
+        address:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+          format: email
+        fathersName:
+          type: string
+        mothersName:
+          type: string
+        fathersOccupation:
+          type: string
+        mothersOccupation:
+          type: string
+        emergencyContact:
+          type: string
+        emergencyContactRelation:
+          type: string
+        emergencyContactPhone:
+          type: string
+        fathersPhoneNumber:
+          type: string
+        mothersPhoneNumber:
+          type: string
+      required: [id, studentName]
