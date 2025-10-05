@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Student } from '../models/student.model';
 import { StudentService } from '../student.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-student',
@@ -16,14 +17,19 @@ export class AddStudentComponent {
   // student: Student {id=0, name: '', age: 0, course: '' };
   student: Student = {  name: '', age: 0, course: ''  };
 
-    constructor(private fb: FormBuilder, private authService: AuthService,private router: Router, private studentService: StudentService) {
+    constructor(private fb: FormBuilder, private authService: AuthService,private router: Router, private studentService: StudentService,private location: Location) {
     this.addStudentForm = this.fb.group({
       name: ['', Validators.required],
       age: ['', Validators.required],
       course: ['', Validators.required],
     });
   }
-
+  goBack() {
+    this.location.back();
+  }
+  goHome() {
+   this.router.navigate(['/home']);
+  }
   onSubmit(){
     this.student.name = this.addStudentForm.value.name;
     this.student.age = this.addStudentForm.value.age;

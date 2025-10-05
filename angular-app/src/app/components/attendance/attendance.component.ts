@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router,RouterModule } from '@angular/router';
 import { StudentService } from '../student.service';
 
 import { Student } from '../models/student.model';
@@ -23,16 +23,11 @@ import { Attendance } from '../models/attendance.module';
 export class AttendanceComponent implements OnInit {
    students: any[] = [];
 
-   constructor(private studentService: StudentService,private location: Location) {
+   constructor(private studentService: StudentService,private location: Location,private router: Router) {
      
    }
 
-  attendanceRecords: Attendance[] = [
-    // { studentId: 43, date: new Date("2025-10-01"), status: 'Present' },
-    // { studentId: 43, date: new Date("2025-10-02"), status: 'Absent' },
-    // { studentId: 43, date: new Date("2025-10-03"), status: 'Late' },
-    // ...add more mock data as needed
-  ];
+  attendanceRecords: Attendance[] = [];
 
   months: string[] = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -74,6 +69,9 @@ export class AttendanceComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+  goHome() {
+   this.router.navigate(['/home']);
   }
   onStudentChange(event: any): void {
     if(event && event.target){

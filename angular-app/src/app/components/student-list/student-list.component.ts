@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router,RouterModule } from '@angular/router';
 import { StudentService } from '../student.service';
 import { Location } from '@angular/common';
 
@@ -13,10 +13,11 @@ import { Location } from '@angular/common';
   imports: [CommonModule, RouterModule] // Include RouterModule here
 })
 export class StudentListComponent implements OnInit {
+
   students: any[] = [];
   selectedStudentIds: number[] = [];
 
-  constructor(private studentService: StudentService, private location: Location) {
+  constructor(private studentService: StudentService, private location: Location,private router: Router) {
     this.studentService.getStudents().subscribe((students: any[]) => {
       this.students = students;
     });
@@ -27,7 +28,9 @@ export class StudentListComponent implements OnInit {
   goBack() {
     this.location.back();
   }
-  
+  goHome() {
+   this.router.navigate(['/home']);
+  }
 
 onCheckboxChange(event: any, studentId: number) {
   if (event.target.checked) {

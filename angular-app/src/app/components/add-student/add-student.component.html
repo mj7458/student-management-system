@@ -1,5 +1,11 @@
 <!-- add-student.component.ts -->
 <form [formGroup]="addStudentForm" (ngSubmit)="onSubmit()" class="add-student-form">
+  <div>
+    <div>
+      <button class="back-btn" style="left: auto;" (click)="goBack()">&#8592; Back</button>
+      <button class="back-btn" style="left: 1%" (click)="goHome()">Home</button>
+    </div>
+  </div>
   <h2>Add Student</h2>
   <div class="form-group">
     <label for="name">Student Name</label>
