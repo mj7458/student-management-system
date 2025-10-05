@@ -9,19 +9,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { authGuard } from './auth.guard';
 import { AttendanceComponent } from './components/attendance/attendance.component';
 import { MarkAttendanceComponent } from './components/mark-attendance/mark-attendance.component';
-
-
-// export const routes: Routes = [
-//   // { path: '', component: HomeComponent },
-//   { path: '', redirectTo: '/login', pathMatch: 'full' },
-//   { path: 'home', component: HomeComponent },
-//   { path: 'students', component: StudentListComponent },
-//   { path: 'students/:id', component: StudentDetailComponent },
-//   { path: 'add-student', component: AddStudentComponent },
-//   { path: 'login', component: LoginComponent },
-//   // {path: '**', redirectTo: '/home' }, // Wildcard route for a 404 page
-//   {path: 'logout', component: LogoutComponent }
-// ];
+import { SignupComponent } from './components/signup/signup.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard], pathMatch: 'full' },
@@ -32,6 +20,7 @@ export const routes: Routes = [
   { path: 'add-student', component: AddStudentComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'mark-attendance',component: MarkAttendanceComponent, canActivate: [authGuard] },
+  { path: 'signup',component: SignupComponent },
   { path: 'logout', component: LogoutComponent }
 ];
 

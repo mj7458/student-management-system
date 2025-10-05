@@ -17,6 +17,7 @@ import { Inject, PLATFORM_ID } from '@angular/core';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
+
   loginForm: FormGroup;
   loading = false;
   credential: Credentials = { username: '', password: '' };
@@ -57,6 +58,9 @@ export class LoginComponent implements OnInit {
       }, 300);
     }
   }
+  onSignUp() {
+  this.router.navigate(['/signup']);
+}
 }
 
 

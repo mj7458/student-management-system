@@ -1,0 +1,52 @@
+<div class="signup-container">
+  <h2>Sign Up</h2>
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <label>
+      Name:
+      <input formControlName="name" type="text" />
+    </label>
+    <div *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched">
+      Name is required.
+    </div>
+
+    <label>
+      Email:
+      <input formControlName="email" type="email" />
+    </label>
+    <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+      Enter a valid email.
+    </div>
+
+    <label>
+      Username:
+      <input formControlName="username" type="text" />
+    </label>
+    <div *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched">
+      Username is required.
+    </div>
+
+    <label>
+      Password:
+      <input formControlName="password" type="password" />
+    </label>
+    <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+      Password must be at least 6 characters.
+    </div>
+
+    <label>
+      Re-enter Password:
+      <input formControlName="rpassword" type="password" />
+    </label>
+    <div *ngIf="signupForm.errors?.['passwordsMismatch'] && signupForm.get('rpassword')?.touched">
+        Passwords do not match.
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary" [disabled]="loading && signupForm.invalid">Register</button>
+      <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onCancel()">Cancel</button>
+    </div>
+    <div *ngIf="loading" class="spinner">
+      Loading...
+    </div>
+  </form>
+</div>
