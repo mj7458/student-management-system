@@ -1,15 +1,10 @@
 package com.studentManagementApp.controller;
 
 import api.AttendanceApi;
-import com.studentManagementApp.entity.Attendance;
-import com.studentManagementApp.mapper.AttendanceMapper;
 import com.studentManagementApp.service.AttendanceService;
 import dto.AttendanceDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-//import org.openapitools.api.AttendanceApi;
-//import org.openapitools.model.AttendanceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,18 +17,19 @@ public class AttendanceController implements AttendanceApi {
     @Autowired
     private AttendanceService attendanceService;
 
-    @Autowired
-    AttendanceMapper attendanceMapper;
 
     @Override
     public ResponseEntity<List<AttendanceDto>> getAttendance(Long studentId, Integer year, Integer month) {
-        return ResponseEntity.ok(attendanceService.getAttendanceForStudent(studentId, year, month));
+        List<AttendanceDto> list = attendanceService.getAttendanceForStudent(studentId, year, month);
+        log.info(list.toString());
+        return ResponseEntity.ok(list);
     }
 
     @Override
     public ResponseEntity<List<AttendanceDto>> saveAttendance(List<@Valid AttendanceDto> attendanceDto) {
-        List<Attendance> attendanceList = attendanceDto.stream().map(attendanceMapper::toEntity).toList();
-        return ResponseEntity.ok(attendanceService.markAttendance(attendanceList));
+        List<AttendanceDto> list = attendanceService.saveAttendance(attendanceDto);
+        log.info(list.toString());
+        return ResponseEntity.ok(list);
     }
 
 }

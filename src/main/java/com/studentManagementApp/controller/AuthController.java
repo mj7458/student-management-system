@@ -2,15 +2,11 @@ package com.studentManagementApp.controller;
 
 import api.AuthenticationApi;
 import com.studentManagementApp.entity.User;
-import com.studentManagementApp.mapper.UserMapper;
+import com.studentManagementApp.mapper.MapperUtilImpl;
 import com.studentManagementApp.security.JwtUtil;
 import com.studentManagementApp.service.UserService;
 import dto.Login200Response;
 import dto.UserDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
-//import org.openapitools.api.AuthenticationApi;
-//import org.openapitools.model.Login200Response;
-//import org.openapitools.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,13 +24,13 @@ public class AuthController implements AuthenticationApi {
     }
 
     @Autowired
-    UserMapper userMapper;
+    MapperUtilImpl mapperUtil;
 
     @Override
     public ResponseEntity<Login200Response> login(UserDto userDto) {
         Login200Response response = new Login200Response();
         if (validateCredentials(userDto)) {
-            response.setToken(jwtUtil.generateToken(userMapper.toEntity(userDto)));
+            response.setToken(jwtUtil.generateToken(mapperUtil.toEntity(userDto)));
             response.setMessage("success");
             return ResponseEntity.ok(response);
         } else {

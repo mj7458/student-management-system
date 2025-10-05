@@ -1,13 +1,10 @@
 package com.studentManagementApp.controller;
 
 import api.StudentsApi;
-import com.studentManagementApp.mapper.StudentMapper;
+import com.studentManagementApp.mapper.MapperUtilImpl;
 import com.studentManagementApp.service.StudentService;
 import dto.StudentDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-//import org.openapitools.api.StudentsApi;
-//import org.openapitools.model.StudentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +16,6 @@ import java.util.List;
 public class StudentController implements StudentsApi {
     private final StudentService service;
 
-    @Autowired
-    private StudentMapper studentMapper;
 
     public StudentController(StudentService service) {
         this.service = service;
@@ -28,7 +23,9 @@ public class StudentController implements StudentsApi {
 
     @Override
     public ResponseEntity<StudentDto> addStudent(StudentDto studentDto) {
-        return ResponseEntity.ok(service.addStudent(studentMapper.toEntity(studentDto)));
+        StudentDto student=service.addStudent(studentDto);
+        log.info(student.toString());
+        return ResponseEntity.ok(student);
     }
 
     @Override
@@ -52,7 +49,9 @@ public class StudentController implements StudentsApi {
 
     @Override
     public ResponseEntity<StudentDto> getStudentByName(String name) {
-        return ResponseEntity.ok(studentMapper.toDto(service.getStudentByName(name)));
+        StudentDto student=service.getStudentByName(name);
+        log.info(student.toString());
+        return ResponseEntity.ok(student);
     }
 
 }
