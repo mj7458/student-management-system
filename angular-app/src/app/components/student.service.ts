@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Attendance } from './models/attendance.module';
+import { StudentDetails } from './models/student-detail.module';
 
 
 @Injectable({
@@ -14,6 +15,8 @@ export class StudentService {
   private deleteApi = 'http://localhost:8080/students/delete';
   private attendanceApi = 'http://localhost:8080/attendance';
   private saveAttendanceApi = 'http://localhost:8080/attendance/save';
+  private saveStudentDetailsApi = 'http://localhost:8080/students/saveDetails';
+  private getStudentDetailsApi = 'http://localhost:8080/students/{name}/getDetails';
 
   constructor(private http: HttpClient,  private authService: AuthService) {}
 
@@ -31,6 +34,17 @@ export class StudentService {
 
   addStudent(student: Student): Observable<Student> {
     return this.http.post<Student>(this.apiUrl, student,{
+      headers: this.authService.getAuthHeaders(),
+    });
+  }
+  saveStudentDetails(student: StudentDetails): Observable<any> {
+    return this.http.post<any>(this.saveStudentDetailsApi, student,{
+      headers: this.authService.getAuthHeaders(),
+    });
+  }
+  getStudentDetails(name: string): Observable<StudentDetails> {
+    const url = `${this.apiUrl}/${name}/getDetails`;
+    return this.http.get<StudentDetails>(url, {
       headers: this.authService.getAuthHeaders(),
     });
   }

@@ -134,6 +134,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StudentDetailsDto'
+  /students/{name}/getDetails:
+    get:
+      summary: Get student by name
+      operationId: getStudentDetailsByName
+      tags: [Students]
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Student found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDetailsDto'
+        '404':
+          description: Student not found
 
   /auth/login:
     post:

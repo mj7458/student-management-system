@@ -60,6 +60,7 @@ public class SecurityConfig  {
                                         "/users",
                                         "/users/**",
                                         "/students/*",
+                                        "/students/**",
                                         "/attendance/*",
                                         "/swagger-ui/**",
                                         "/swagger-ui.html",

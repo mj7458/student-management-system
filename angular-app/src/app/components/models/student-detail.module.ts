@@ -1,14 +1,14 @@
 export interface StudentDetails {
   id?: number;
   studentId?: number;
-  name: string;
-  age: number;
+  studentName: string;
+  studentAge: number;
   sex?: string;
   course: string;
   address?: string;
   phoneNumber?: string;
   email?: string;
-  enrollDate?: string;
+  enroll_date?: Date;
   fathersName?: string;
   fathersOccupation?: string;
   mothersName?: string;
@@ -16,4 +16,6 @@ export interface StudentDetails {
   emergencyContact?: string;
   emergencyContactRelation?: string;
   emergencyContactPhone?: string;
+  mothersPhoneNumber?: string;
+  fathersPhoneNumber?: string;
 }

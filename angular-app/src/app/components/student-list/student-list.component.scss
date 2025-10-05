@@ -164,3 +164,19 @@ h2 {
   background: rgb(53, 117, 181);
   color: white;
 }
+
+.student-link {
+  display: inline; /* prevents block-level button look */
+  color: #3d80b7;; /* standard link blue */
+  // text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.student-link:hover {
+  text-decoration: rgb(9, 71, 133);
+}

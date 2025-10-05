@@ -73,4 +73,12 @@ public class StudentService {
         StudentDetails studentDetails=mapperUtil.toEntity(studentDetailsDto);
         return mapperUtil.toDto(studentDetailsRepository.save(studentDetails));
     }
+
+    public StudentDetailsDto getStudentDetailsByName(String name) {
+        StudentDetailsDto details=mapperUtil.toDto(studentDetailsRepository.findByStudentName(name));
+        if(details!=null){
+            return details;
+        }
+        return null;
+    }
 }

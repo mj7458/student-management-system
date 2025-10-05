@@ -38,7 +38,8 @@ export class StudentListComponent implements OnInit {
         studentName: student.name,
         studentId: student.id,
         studentAge: student.age,
-        course: student.course
+        course: student.course,
+        enroll_date: student.enroll_date
       }
     });
   }

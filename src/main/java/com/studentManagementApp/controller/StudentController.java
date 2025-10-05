@@ -61,4 +61,18 @@ public class StudentController implements StudentsApi {
         log.info(detailsDto.toString());
         return ResponseEntity.ok(detailsDto);
     }
+
+    @Override
+    public ResponseEntity<StudentDetailsDto> getStudentDetailsByName(String name) {
+        StudentDetailsDto detailsDto = service.getStudentDetailsByName(name);
+
+        if (detailsDto == null) {
+            log.warn("No student details found for name: {}", name);
+            return ResponseEntity.notFound().build(); // or ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        log.info(detailsDto.toString());
+        return ResponseEntity.ok(detailsDto);
+    }
+
 }

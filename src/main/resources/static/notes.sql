@@ -9,3 +9,5 @@ GRANT UNLIMITED TABLESPACE TO app_user;
 
 SELECT * FROM USER_TABLES;
 SELECT * FROM DBA_USERS;
+
+alter table student_details add CONSTRAINT uq_student UNIQUE (student_id,student_name)

@@ -1,7 +1,8 @@
-<form [formGroup]="addStudentForm" (ngSubmit)="onSubmit()" class="add-student-form">
+<!-- <form [formGroup]="addStudentForm" (ngSubmit)="onSubmit()" class="add-student-form"> -->
+<form [formGroup]="addStudentForm" class="add-student-form">
   <div class="form-header">
-    <button class="back-btn" (click)="goBack()">← Back</button>
-    <button class="back-btn" (click)="goHome()">Home</button>
+    <button type="button" class="back-btn" (click)="goBack()">← Back</button>
+    <button type="button" class="back-btn" (click)="goHome()">Home</button>
   </div>
 
   <h2>Student Form</h2>
@@ -12,22 +13,22 @@
     <div class="form-grid">
       <div class="form-group">
         <label for="studentName">Student Name</label>
-        <input id="studentName" formControlName="studentName" type="text" autocomplete="off" required />
+        <input id="studentName" formControlName="studentName" type="text" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('studentName')?.invalid }" required />
       </div>
 
       <div class="form-group">
         <label for="studentId">Student ID</label>
-        <input id="studentId" formControlName="studentId" type="number" autocomplete="off" required />
+        <input id="studentId" formControlName="studentId" type="number" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('studentId')?.invalid }" required />
       </div>
 
     <div class="form-row compact-group">
         <div class="compact-item">
             <label for="studentAge">Age</label>
-            <input id="studentAge" formControlName="studentAge" type="number" autocomplete="off" required />
+            <input id="studentAge" formControlName="studentAge" type="number" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('studentAge')?.invalid }" required />
         </div>
         <div class="compact-item">
             <label for="sex">Sex</label>
-            <select id="sex" formControlName="sex" required>
+            <select id="sex" formControlName="sex" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('sex')?.invalid }" required>
             <option value="">--Select--</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -38,27 +39,27 @@
 
       <div class="form-group">
         <label for="course">Course</label>
-        <input id="course" formControlName="course" type="text" autocomplete="off" required />
+        <input id="course" formControlName="course" type="text" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('course')?.invalid }" required />
       </div>
 
       <div class="form-group">
         <label for="address">Address</label>
-        <input id="address" formControlName="address" type="text" autocomplete="off" />
+        <input id="address" formControlName="address" type="text" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('address')?.invalid }" required/>
       </div>
 
       <div class="form-group">
         <label for="phoneNumber">Phone Number</label>
-        <input id="phoneNumber" formControlName="phoneNumber" type="tel" autocomplete="off" />
+        <input id="phoneNumber" formControlName="phoneNumber" type="tel" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('phoneNumber')?.invalid }" required/>
       </div>
 
       <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" formControlName="email" type="email" autocomplete="off" />
+        <input id="email" formControlName="email" type="email" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('email')?.invalid }" />
       </div>
 
       <div class="form-group">
         <label for="enrollDate">Enroll Date</label>
-        <input id="enrollDate" formControlName="enrollDate" type="date" autocomplete="off" />
+        <input id="enrollDate" formControlName="enrollDate" type="date" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('enrollDate')?.invalid }" />
       </div>
     </div>
   </fieldset>
@@ -69,40 +70,40 @@
     <div class="form-grid">
       <div class="form-group">
         <label for="fathersName">Father's Name</label>
-        <input id="fathersName" formControlName="fathersName" type="text" autocomplete="off" />
+        <input id="fathersName" formControlName="fathersName" type="text" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('fathersName')?.invalid }"/>
       </div>
 
       <div class="form-group">
         <label for="fathersOccupation">Father's Occupation</label>
-        <input id="fathersOccupation" formControlName="fathersOccupation" type="text" autocomplete="off" />
+        <input id="fathersOccupation" formControlName="fathersOccupation" type="text" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('fathersOccupation')?.invalid }"/>
       </div>
 
      <div class="form-group">
-        <label for="emergencyContactPhone">Father's Contact</label>
-        <input id="emergencyContactPhone" formControlName="emergencyContactPhone" type="tel" autocomplete="off" />
+        <label for="fathersPhoneNumber">Father's Contact</label>
+        <input id="fathersPhoneNumber" formControlName="fathersPhoneNumber" type="tel" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('fathersPhoneNumber')?.invalid }"/>
       </div>
       <div class="form-group">
         <label for="mothersName">Mother's Name</label>
-        <input id="mothersName" formControlName="mothersName" type="text" autocomplete="off" />
+        <input id="mothersName" formControlName="mothersName" type="text" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('mothersName')?.invalid }"/>
       </div>
 
       <div class="form-group">
         <label for="mothersOccupation">Mother's Occupation</label>
-        <input id="mothersOccupation" formControlName="mothersOccupation" type="text" autocomplete="off" />
+        <input id="mothersOccupation" formControlName="mothersOccupation" type="text" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('mothersOccupation')?.invalid }"/>
       </div>
 
      <div class="form-group">
-        <label for="emergencyContactPhone">Mother's Contact</label>
-        <input id="emergencyContactPhone" formControlName="emergencyContactPhone" type="tel" autocomplete="off" />
+        <label for="mothersPhoneNumber">Mother's Contact</label>
+        <input id="mothersPhoneNumber" formControlName="mothersPhoneNumber" type="tel" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('mothersPhoneNumber')?.invalid }"/>
       </div>
       <div class="form-group">
         <label for="emergencyContact">Emergency Contact Name</label>
-        <input id="emergencyContact" formControlName="emergencyContact" type="text" autocomplete="off" />
+        <input id="emergencyContact" formControlName="emergencyContact" type="text" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('emergencyContact')?.invalid }"/>
       </div>
 
     <div class="form-group">
         <label for="emergencyContactRelation">Relation</label>
-        <select id="emergencyContactRelation" formControlName="emergencyContactRelation" required>
+        <select id="emergencyContactRelation" formControlName="emergencyContactRelation" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('emergencyContactRelation')?.invalid }" required>
             <option value="">--Select--</option>
             <option value="Father">Father</option>
             <option value="Mother">Mother</option>
@@ -119,14 +120,14 @@
 
       <div class="form-group">
         <label for="emergencyContactPhone">Emergency Person's Contact</label>
-        <input id="emergencyContactPhone" formControlName="emergencyContactPhone" type="tel" autocomplete="off" />
+        <input id="emergencyContactPhone" formControlName="emergencyContactPhone" type="tel" autocomplete="off" [ngClass]="{ 'invalid-field': formSubmitted && addStudentForm.get('emergencyContactPhone')?.invalid }"/>
       </div>
     </div>
   </fieldset>
 
 <div class="form-actions">
-  <button type="button" class="cancel-btn" >Cancel</button>
-  <button type="submit" class="submit-btn">Save</button>
+  <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
+  <button type="submit" class="submit-btn" (click)="onSubmit()">Save</button>
 </div>
 
 </form>
