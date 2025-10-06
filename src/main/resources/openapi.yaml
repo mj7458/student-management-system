@@ -29,6 +29,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserDto'
+    post:
+      tags: [Users]
+      summary: Add a new user
+      operationId: addUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '200':
+          description: User added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
   /students:
     get:
       summary: Get all students
@@ -286,6 +303,14 @@ components:
           type: string
         password:
           type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [Admin, Teacher, Student]
       required: [id, username, password]
 
     StudentDetailsDto:

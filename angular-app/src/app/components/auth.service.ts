@@ -13,27 +13,6 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  // login(credentials: { username: string; password: string }) {
-  //   return this.http.post<{ token: string }>(this.apiUrl, credentials).subscribe({
-  //     next: (response) => {
-  //       // console.log('Received response:', response); // ✅ Log response
-  //       if (response?.token) {
-  //         localStorage.setItem('X-Auth-token', response.token); // ✅ Store JWT safely
-  //         // console.log('Token stored successfully:', localStorage.getItem('X-Auth-token')); // ✅ Log token storage
-  //         // this.router.navigate(['/home']); 
-  //       } else {
-  //         console.error('Error: No token received in response'); // 🚨 Handle missing token
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('Login failed:', err); // 🚨 Log error
-  //     },
-  //     complete: () => {
-  //       console.log('Login successfull'); // ✅ Indicate request completion
-  //     },
-  //   });
-
-  // }
 
   login(credentials: { username: string; password: string }): Promise<string> {
   return new Promise((resolve) => {

@@ -22,7 +22,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String token = request.getHeader("X-Auth-token");
         String path = request.getServletPath();
-        if (path.startsWith("/auth/login") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.startsWith("/swagger-ui.html"))
+        if (path.startsWith("/auth/login") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.startsWith("/swagger-ui.html") ||path.endsWith("/users"))
         {
             chain.doFilter(request, response);
             return;

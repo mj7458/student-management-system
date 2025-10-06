@@ -22,5 +22,9 @@ public class UserController implements UsersApi {
         return ResponseEntity.ok(users);
     }
 
-
+    @Override
+    public ResponseEntity<UserDto> addUser(UserDto userDto) {
+        UserDto createdUser = userService.addUser(userDto); // save to DB or service
+        return ResponseEntity.ok(createdUser);
+    }
 }

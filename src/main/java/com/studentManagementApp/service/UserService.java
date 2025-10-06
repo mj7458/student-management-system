@@ -30,5 +30,10 @@ public class UserService {
         return users.stream().map(mapperUtil::toDto).collect(Collectors.toList());
     }
 
+    public UserDto addUser(UserDto userDto) {
+        User user = mapperUtil.toEntity(userDto);
+        User savedUser = repository.save(user);
+        return mapperUtil.toDto(savedUser);
+    }
 
 }
