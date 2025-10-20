@@ -3,12 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth/login'; // Update with your backend URL
+  private apiUrl = environment.apiUrl+'/auth/login'; // Update with your backend URL
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -16,10 +18,16 @@ export class AuthService {
 
   login(credentials: { username: string; password: string }): Promise<string> {
   return new Promise((resolve) => {
-    this.http.post<{ token: string, message: string }>(this.apiUrl, credentials).subscribe({
+    this.http.post<{ token: string, message: string, userRole: string, userName: string}>(this.apiUrl, credentials).subscribe({
       next: (response) => {
         if (response?.token) {
           localStorage.setItem('X-Auth-token', response.token);
+          // if(response?.userName){
+              localStorage.setItem('currentUser',response.userName);
+          // }
+          // if(response?.userRole){
+              localStorage.setItem('currentUserRole',response.userRole);
+          // }
           resolve(response?.message); // No error, return empty string
         } else {
           // console.error('Error: No token received in response');
@@ -60,5 +68,12 @@ export class AuthService {
     return Date.now() < exp;
   }
 
+    getCurrentUserRole(): string {
+    return localStorage.getItem('currentUserRole') || '';
+  }
+
+  isAdmin(): boolean {
+    return this.getCurrentUserRole() === 'ADMIN';
+  }
 
 }

@@ -11,3 +11,5 @@ SELECT * FROM USER_TABLES;
 SELECT * FROM DBA_USERS;
 
 alter table student_details add CONSTRAINT uq_student UNIQUE (student_id,student_name)
+ALTER TABLE users
+ADD CONSTRAINT unique_username UNIQUE (Username);

@@ -29,9 +29,12 @@ public class AuthController implements AuthenticationApi {
     @Override
     public ResponseEntity<Login200Response> login(UserDto userDto) {
         Login200Response response = new Login200Response();
-        if (validateCredentials(userDto)) {
+        User data = userService.getUserByName(userDto.getUsername());
+        if (validateCredentials(userDto, data)) {
             response.setToken(jwtUtil.generateToken(mapperUtil.toEntity(userDto)));
             response.setMessage("success");
+            response.setUserName(data.getUsername());
+            response.setUserRole(data.getRole());
             return ResponseEntity.ok(response);
         } else {
             response.setMessage("Invalid username/password");
@@ -39,8 +42,7 @@ public class AuthController implements AuthenticationApi {
         }
     }
 
-    private boolean validateCredentials(UserDto user) {
-        User data = userService.getUserByName(user.getUsername());
+    private boolean validateCredentials(UserDto user, User data) {
         if (data == null) {
             return false;
         }

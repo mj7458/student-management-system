@@ -46,6 +46,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserDto'
+    delete:
+      tags: [Users]
+      summary: Delete user
+      operationId: deleteUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        '204':
+          description: User deleted
+
   /students:
     get:
       summary: Get all students
@@ -197,6 +211,12 @@ paths:
                   message:
                     type: string
                     description: Status message
+                  userRole:
+                    type: string
+                    description: Role of the user (present only on success)
+                  userName:
+                    type: string
+                    description: Name of the user (present only on success)
         '401':
           description: Invalid credentials
 

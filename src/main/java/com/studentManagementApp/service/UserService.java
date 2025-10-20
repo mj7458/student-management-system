@@ -36,4 +36,9 @@ public class UserService {
         return mapperUtil.toDto(savedUser);
     }
 
+    public void deleteUser(UserDto userDto) {
+        User user = mapperUtil.toEntity(userDto);
+        repository.delete(user);
+    }
+
 }

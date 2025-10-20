@@ -1,30 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Student } from './models/student.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Attendance } from './models/attendance.module';
 import { StudentDetails } from './models/student-detail.module';
+import { environment } from '../../environments/environment';
+
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentService {
-  private apiUrl = 'http://localhost:8080/students';
-  private deleteApi = 'http://localhost:8080/students/delete';
-  private attendanceApi = 'http://localhost:8080/attendance';
-  private saveAttendanceApi = 'http://localhost:8080/attendance/save';
-  private saveStudentDetailsApi = 'http://localhost:8080/students/saveDetails';
-  private getStudentDetailsApi = 'http://localhost:8080/students/{name}/getDetails';
+  // private baseUrl = environment.apiUrl; 
+  private apiUrl = `${environment.apiUrl}/students`;
+  private deleteApi = environment.apiUrl+'/students/delete';
+  private attendanceApi = environment.apiUrl+'/attendance';
+  private saveAttendanceApi = environment.apiUrl+'/attendance/save';
+  private saveStudentDetailsApi = environment.apiUrl+'/students/saveDetails';
+  private getStudentDetailsApi = environment.apiUrl+'/students/{name}/getDetails';
 
   constructor(private http: HttpClient,  private authService: AuthService) {}
 
-  getStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.apiUrl,  {
-      headers: this.authService.getAuthHeaders(),
-    });
-  }
+  // getStudents(): Observable<Student[]> {
+  //   return this.http.get<Student[]>(this.apiUrl,  {
+  //     headers: this.authService.getAuthHeaders(),
+  //   });
+  // }
+
+    getStudents(): Observable<Student[]> {
+    const headers = this.authService.getAuthHeaders(); // returns HttpHeaders
+
+    return this.http.get<Student[]>(this.apiUrl, { headers }).pipe(
+      tap((data) => {
+        console.log('Received students:', data);
+      }),
+      catchError((error) => {
+        console.error('Error fetching students:', error);
+        return throwError(() => error);
+      })
+    );
+  } 
 
   getStudentById(id: number): Observable<Student> {
     return this.http.get<Student>(`${this.apiUrl}/${id}`,{

@@ -27,4 +27,10 @@ public class UserController implements UsersApi {
         UserDto createdUser = userService.addUser(userDto); // save to DB or service
         return ResponseEntity.ok(createdUser);
     }
+
+    @Override
+    public ResponseEntity<Void> deleteUser(UserDto userDto) {
+        userService.deleteUser(userDto); // delete from DB or service
+        return ResponseEntity.noContent().build();
+    }
 }

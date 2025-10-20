@@ -10,6 +10,8 @@ import { authGuard } from './auth.guard';
 import { AttendanceComponent } from './components/attendance/attendance.component';
 import { MarkAttendanceComponent } from './components/mark-attendance/mark-attendance.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { UsersManagementComponent } from './components/users-management/users-management.component';
+import path from 'path';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard], pathMatch: 'full' },
@@ -20,6 +22,8 @@ export const routes: Routes = [
   { path: 'add-student', component: AddStudentComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'mark-attendance',component: MarkAttendanceComponent, canActivate: [authGuard] },
+  { path: 'users-management',component: UsersManagementComponent, canActivate: [authGuard] , 
+    children: [ {path: 'signup',component: SignupComponent  }]},
   { path: 'signup',component: SignupComponent },
   { path: 'logout', component: LogoutComponent }
 ];

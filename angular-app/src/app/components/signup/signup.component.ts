@@ -18,6 +18,7 @@ export class SignupComponent {
 signupForm: FormGroup;
 loading = false;
 user: User = { name: '', email: '', password: '', username: '', role: ''};
+registerButtonLabel = localStorage.getItem('registerButtonLabel') || 'Register';
 
   constructor(private fb: FormBuilder, private router: Router, private userservice: UserService) {
     this.signupForm = this.fb.group(
@@ -50,7 +51,16 @@ user: User = { name: '', email: '', password: '', username: '', role: ''};
           console.log('User added successfully', response);
     }
       });
-      this.router.navigate(['/login']);
+      if(localStorage.getItem('parent-page')==='users-management'){
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/users-management']);
+        });
+
+        localStorage.removeItem('parent-page');
+      }
+      else{
+        this.router.navigate(['/login']);
+      }   
     } else {
       console.log('Form is invalid');
       this.signupForm.markAllAsTouched(); // ✅ mark all fields as touched to show validation errors
@@ -59,7 +69,15 @@ user: User = { name: '', email: '', password: '', username: '', role: ''};
 
   onCancel() {
     this.signupForm.reset(); // ✅ graceful cancel behavior
-    this.router.navigate(['/login']);
+    if(localStorage.getItem('parent-page')==='users-management'){
+        this.router.navigate(['/users-management'], {
+          queryParams: { reload: true }
+        });
+        localStorage.removeItem('parent-page');
+      }
+      else{
+        this.router.navigate(['/login']);
+      } 
   }
 
   passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
