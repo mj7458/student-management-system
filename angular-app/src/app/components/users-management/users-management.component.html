@@ -1,0 +1,78 @@
+<div class="student-container">
+
+
+<h2>User Management</h2>
+
+<div *ngIf="isAdmin">
+  <button (click)="addUserForm()" class="back-btn" style="left: auto;">Add User</button>
+  <!-- <button (click)="cancel()" class="back-btn" style="left: 1%" *ngIf="showCancelButton">Cancel</button> -->
+</div>
+<table class="student-table">
+  <thead>
+    <tr>
+      <th>Name</th><th>Email</th><th>Username</th><th>Role</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.name }}</td>
+      <td> <button class="student-link" (click)="userView(user)"> {{ user.email }}</button></td>
+      <td>{{ user.name }} </td>
+      <td>{{ user.role }}</td>
+      <td class="action-cell">
+        <div class="action-menu" #menuTrigger (click)="toggleMenu(user)" [class.disabled]="!isAdmin">
+          &#8942; <!-- vertical ellipsis -->
+          <div class="dropdown" *ngIf="activeUser === user" [ngClass]="dropdownDirection">
+            <button *ngIf="isAdmin" (click)="editUser(user)">Edit</button>
+            <button (click)="deleteUser(user)">Delete</button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<div *ngIf="selectedUser && showActionViewEdit">
+  <h3>{{ isAdmin && !actionView ? 'Edit User' : 'View User' }}</h3>
+  <form *ngIf="isAdmin && !actionView" class="form-group">
+    <label>Name : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input [(ngModel)]="selectedUser.name" placeholder="Name" name="name" />
+    </label>
+    <label>Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input [(ngModel)]="selectedUser.email" placeholder="Email" name="email" />
+    </label>
+    <label>Username : &nbsp;&nbsp;
+    <input [(ngModel)]="selectedUser.username" placeholder="Username" name="username" />
+    </label>
+    <label *ngIf="showPass">Password : &nbsp;&nbsp;&nbsp;
+    <input *ngIf="showPass" type="password" [(ngModel)]="selectedUser.password" placeholder="Password" name="password" disabled="true"/>
+    </label>
+    <label>Role : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <select [(ngModel)]="selectedUser.role" name="role">
+        <option value="">--Select--</option>
+        <option value="Admin">Admin</option>
+        <option value="Teacher">Teacher</option>
+        <option value="Student">Student</option>
+    </select>
+    </label>
+    <button (click)="saveUser()" style="left: 1%; margin-top: 2%;">Save</button>
+  </form>
+
+  <div *ngIf="!isAdmin || actionView">
+    <p><strong>Name:</strong> {{ selectedUser.name }}</p>
+    <p><strong>Email:</strong> {{ selectedUser.email }}</p>
+    <p><strong>Username:</strong> {{ selectedUser.username }}</p>
+    <p><strong>Role:</strong> {{ selectedUser.role }}</p>
+  </div>
+</div>
+
+
+
+<!-- Conditionally show signup form -->
+<div *ngIf="isAdmin && showSignupForm">
+  <router-outlet></router-outlet>
+</div>
+
+
+</div>
