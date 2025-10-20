@@ -1,6 +1,7 @@
 package com.studentManagementApp.controller;
 
 import api.UsersApi;
+import com.studentManagementApp.mapper.MapperUtil;
 import com.studentManagementApp.service.UserService;
 import dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,8 @@ import java.util.List;
 public class UserController implements UsersApi {
     @Autowired
     private UserService userService;
+    @Autowired
+    private MapperUtil mapperUtil;
 
     @Override
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -32,5 +35,11 @@ public class UserController implements UsersApi {
     public ResponseEntity<Void> deleteUser(UserDto userDto) {
         userService.deleteUser(userDto); // delete from DB or service
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<UserDto> getUser(String username) {
+        UserDto userDto=mapperUtil.toDto(userService.getUserByName(username));
+        return ResponseEntity.ok(userDto);
     }
 }

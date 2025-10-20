@@ -1,5 +1,5 @@
 <div class="login-container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+  <form *ngIf="loginPage" [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
     <h2>Login</h2>
 
     <div class="form-group">
@@ -20,6 +20,7 @@
     <div class="button-group">
       <button type="submit" class="btn btn-primary" [disabled]="loading">Login</button>
       <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onSignUp()">Sign up</button>
+      <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onForgotPass()">Forgot password</button>
     </div>
 
     <!-- Spinner shown when loading -->
@@ -27,4 +28,34 @@
       Loading...
     </div>
   </form>
+
+  <form *ngIf="resetPage"  class="reset-form" [formGroup]="resetForm">
+    <h2>Reset Password</h2>
+   <div class="form-group">
+      <label for="username">Username</label>
+      <input id="username" formControlName="username" type="text" class="form-control" required autocomplete="off" />
+    </div>
+
+    <div class="form-group">
+      <label for="password">New password</label>
+      <input id="password" formControlName="password" type="password" class="form-control" required />
+    </div>
+       <div *ngIf="resetForm.get('password')?.invalid && resetForm.get('password')?.touched">
+         Password must be at least 6 characters.
+      </div>
+
+    <div class="form-group">
+      <label for="password">Re-enter password</label>
+      <input id="password" formControlName="rpassword" type="password" class="form-control" required />
+      <div *ngIf="resetForm.errors?.['passwordsMismatch'] && resetForm.get('rpassword')?.touched">
+        Passwords do not match.
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="button" class="btn btn-primary" [disabled]="loading" (click)="reset()">reset</button>
+      <button type="button" class="btn btn-primary" [disabled]="loading" (click)="back()">back</button>
+    </div>
+  </form>
+
 </div>
